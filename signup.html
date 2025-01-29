@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            padding: 10px;
+        }
+
+        .navbar .left {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .navbar .left img {
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .navbar .left .title {
+            margin-left: 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .container {
+            background-color: #22272e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .password-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .password-container input {
+            width: 100%;
+            padding-right: 40px;
+            box-sizing: border-box;
+        }
+
+        .password-container img {
+            position: absolute;
+            right: 10px;
+            top: 37%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .captcha {
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #000000;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+
+        .dropdown-content.show {
+            display: block;
+            max-height: 500px;
+            transition: max-height 0.3s ease-in;
+        }
+    </style>
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdownMenu");
+            if (dropdown.classList.contains("show")) {
+                dropdown.classList.remove("show");
+            } else {
+                dropdown.classList.add("show");
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("password");
+            const toggleIcon = document.getElementById("togglePassword");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.src = "../gambar/eyeon.png.svg"; // Ganti dengan path ke ikon "show" Anda
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.src = "../gambar/eyeoff.png.svg"; // Ganti dengan path ke ikon "hide" Anda
+            }
+        }
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var checkbox = document.querySelector('input[type="checkbox"]');
+            if (!checkbox.checked) {
+                event.preventDefault();
+                alert('Please confirm you are not a robot.');
+                return;
+            }
+
+            event.preventDefault();
+            var username = document.getElementById('username').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            var user = {
+                username: username,
+                email: email,
+                password: password
+            };
+
+            fetch('data/user.json', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('User data saved successfully.');
+                window.location.href = '../home.html'; // Mengarahkan ke halaman utama
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred while saving user data.');
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="left">
+            <img src="../gambar/hytam.png" alt="Logo" onclick="toggleDropdown()">
+            <div class="title">
+                <span>Akademi</span>
+                <span>Forex</span>
+            </div>
+            <div id="dropdownMenu" class="dropdown-content">
+                <a href="../home.html">Home</a>
+                <a href="profile.html">Profile</a>
+                <a href="../settings.html">Settings</a>
+                <a href="logout.html">Logout</a>    
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form action="http://localhost:5500/signup" method="post">
+            <div class="input-container">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+            </div>
+            <div class="input-container">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+            </div>
+            <div class="password-container">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <img id="togglePassword" src="../gambar/eyeoff.png.svg" alt="Toggle Password Visibility" onclick="togglePasswordVisibility()">
+            </div>
+            <div class="captcha">
+                <label>
+                    <input type="checkbox" required> I'm not a robot
+                </label>
+            </div>
+            <input type="submit" value="Sign Up">
+        </form>        
+    </div>
+</body>
+</html>

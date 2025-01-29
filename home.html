@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akademi Forex</title> <link rel="shortcut icon" href="gambar/hytam.png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000; 
+            color: #ffffff;
+            overflow-y: auto;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .navbar .left {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .left .tab {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #000000; /* Change background color to black */
+            border: none;
+            color: white;
+            font-size: 28px; /* Increase font size */
+            margin-top: -10px; /* Move the logo slightly upwards */
+        }
+        .navbar .left img {
+            height: 80px; /* Increased height of the logo */
+            margin-left: 0px; /* Adjusted margin to move logo to the left */
+            cursor: pointer; /* Make the logo clickable */
+        }
+        .navbar .left .title {
+            margin-left: 5px; /* Adjusted margin to move title to the left */
+            font-size: 24px;
+            color: white;
+        }
+        .navbar .left .title span {
+            display: block;
+        }
+        .navbar .right a {
+            margin-left: 10px;
+        }
+        .navbar .right a[href="data/login.html"] {
+            background-color: #830cd2; /* background login */
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #000000;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .content {
+            text-align: center;
+            margin: 50px 0;
+        }
+        .content h1 {
+            font-size: 4vw; /*  font size */
+            margin-bottom: 20px;
+        }
+        .content p {
+            font-size: 2vw; /*  font size */
+        }
+        .extra-content {
+            height: 1000px; /* ketinggian scroll */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="left">
+            <img src="gambar/hytam.png" alt="Logo" onclick="toggleDropdown()">
+            <div class="title">
+                <span>Akademi</span>
+                <span>Forex</span>
+            </div>
+        </div>
+        <div class="right">
+            <a href="data/signup.html">Sign Up</a>
+            <a href="data/login.html">Login</a>
+        </div>
+    </div>
+
+    <div id="dropdownMenu" class="dropdown-content">
+        <a href="data/profile.html">Profile</a>
+        <a href="settings.html">Settings</a>
+        <a href="logout.html">Logout</a>    
+        </div>
+    <div class="content"></div>
+    <div class="content">
+        <h1 class="elementor-heading-title elementor-size-default">Strategi Trading Forex Untuk <br><span class="new-accent-color-2" style="color: #00b6ff;">Gandain Uang Kalian</span></h1>
+            <div class="elementor-element elementor-element-138fc403 elementor-widget__width-initial elementor-widget-mobile_extra__width-initial elementor-widget elementor-widget-text-editor" data-id="138fc403" data-element_type="widget" data-widget_type="text-editor.default">
+            <div class="elementor-widget-container"></div>
+                    <p><b>99.9% Murid</b> di Akademi berhasil melipatgandakan portofolionya</p>
+                    <p><b><u></b> dalam waktu 1 hari</u></b> menggunakan strategi kita.</p>
+                    <p><style>.din{display:inline !important;}</style></p>
+                </div>
+            </div>
+    <div class="extra-content"></div> <!-- scroll -->
+    <div class="content"></div>
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdownMenu");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

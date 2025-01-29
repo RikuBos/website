@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil - Akademi Forex</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #000000;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .navbar .left {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .left img {
+            height: 50px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .navbar .left .title {
+            font-size: 24px;
+            color: white;
+        }
+        .edit-profile {
+            max-width: 600px;
+            width: 90%;
+            background-color: #333333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 100px auto 20px auto;
+        }
+        .edit-profile h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .edit-profile form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .edit-profile label {
+            font-size: 16px;
+        }
+        .edit-profile input, .edit-profile select {
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            background-color: #444444;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .edit-profile input[type="file"] {
+            padding: 5px;
+        }
+        .edit-profile button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+        .edit-profile button:hover {
+            background-color: #0056b3;
+        }
+        .edit-profile img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <script>
+        // Memuat data profil dari localStorage
+        function loadProfile() {
+            const userProfile = JSON.parse(localStorage.getItem("userProfile")) || {
+                username: "",
+                email: "",
+                fullName: "",
+                dateOfBirth: "",
+                profilePicture: "../gambar/default-profile.png"
+            };
+
+            document.getElementById("username").value = userProfile.username;
+            document.getElementById("email").value = userProfile.email;
+            document.getElementById("fullName").value = userProfile.fullName;
+            document.getElementById("dateOfBirth").value = userProfile.dateOfBirth;
+            document.getElementById("currentProfilePicture").src = userProfile.profilePicture;
+        }
+
+        // Pratinjau gambar profil baru
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.getElementById('currentProfilePicture');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        // Menyimpan data profil ke localStorage
+        function saveProfile(event) {
+            event.preventDefault();
+
+            const profileData = {
+                username: document.getElementById("username").value,
+                email: document.getElementById("email").value,
+                fullName: document.getElementById("fullName").value,
+                dateOfBirth: document.getElementById("dateOfBirth").value,
+                profilePicture: document.getElementById("currentProfilePicture").src
+            };
+
+            localStorage.setItem("userProfile", JSON.stringify(profileData));
+            alert("Profil berhasil disimpan!");
+        }
+
+        // Memuat opsi gambar dari folder (simulasi JSON)
+        function loadImageOptions() {
+            const images = [
+                { name: "Default", path: "../gambar/default-profile.png" },
+                { name: "Gambar 1", path: "../gambar/profile1.png" },
+                { name: "Gambar 2", path: "../gambar/profile2.png" }
+            ];
+
+            const select = document.getElementById("profilePictureSelect");
+
+            images.forEach(image => {
+                const option = document.createElement("option");
+                option.value = image.path;
+                option.textContent = image.name;
+                select.appendChild(option);
+            });
+
+            select.addEventListener("change", (event) => {
+                const selectedPath = event.target.value;
+                document.getElementById("currentProfilePicture").src = selectedPath;
+            });
+        }
+
+        // Memuat profil dan gambar pada saat halaman dimuat
+        window.onload = function () {
+            loadProfile();
+            loadImageOptions();
+        };
+    </script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="left">
+            <img src="../gambar/hytam.png" alt="Logo" onclick="window.location.href='../home.html'">
+            <div class="title">
+                <span>Akademi</span>
+                <span>Forex</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="edit-profile">
+        <h2>Edit Profil</h2>
+        <form onsubmit="saveProfile(event)">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="fullName">Nama Lengkap</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="dateOfBirth">Tanggal Lahir</label>
+            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+            <label for="profilePicture">Foto Profil</label>
+            <img id="currentProfilePicture" src="../gambar/default-profile.png" alt="Profile Picture">
+            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" onchange="previewImage(event)">
+
+            <label for="profilePictureSelect">Atau pilih dari folder:</label>
+            <select id="profilePictureSelect">
+                <option value="">-- Pilih Gambar --</option>
+            </select>
+
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    </div>
+</body>
+</html>
